@@ -4,313 +4,244 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Espace Évaluation & Soutien</title>
-  <style>
-    :root {
-      --bg: #f0f4f8;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #64748b;
-      --primary: #0d9488;
-      --primary-dark: #0f766e;
-      --danger: #b91c1c;
-      --success: #15803d;
-    }
-    html,body { height:100%; margin:0; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      padding: 20px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:100vh;
-    }
-    .container {
-      width:100%;
-      max-width:700px;
-      background:var(--card);
-      padding:28px;
-      border-radius:12px;
-      box-shadow:0 4px 15px rgba(0,0,0,0.05);
-    }
-    h1 { text-align:center; color:#1e3a8a; margin:0 0 8px; font-size:24px; }
-    p.intro { text-align:center; color:var(--muted); margin:0 0 20px; }
-    form { margin-top:18px; }
-    fieldset {
-      border:0;
-      margin:0 0 18px;
-      padding:0;
-    }
-    legend {
-      font-weight:600;
-      font-size:16px;
-      margin-bottom:8px;
-      color:#1e293b;
-    }
-    .options { display:flex; gap:16px; flex-wrap:wrap; }
-    .option-label {
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      cursor:pointer;
-      font-size:15px;
-      padding:6px 10px;
-      border-radius:8px;
-      border:1px solid transparent;
-    }
-    .option-label input[type="radio"] { accent-color: var(--primary); }
-    .option-label:focus-within { outline:2px solid #cfece9; }
-    button[type="submit"] {
-      display:block;
-      width:100%;
-      margin-top:12px;
-      background:var(--primary);
-      color:#fff;
-      border:0;
-      padding:12px;
-      font-size:16px;
-      font-weight:700;
-      border-radius:8px;
-      cursor:pointer;
-    }
-    button[type="submit"]:hover { background:var(--primary-dark); }
-    button[type="submit"]:disabled { background:#cbd5e1; cursor:not-allowed; }
-    .result-section {
-      margin-top:22px;
-      padding:18px;
-      border-radius:8px;
-      display:none;
-    }
-    .need-help { background:#fff5f5; border-left:5px solid #ef4444; }
-    .all-good { background:#f0fdf4; border-left:5px solid #22c55e; }
-    .result-title { font-size:18px; font-weight:700; margin:0 0 8px; }
-    .emergency-contacts { margin-top:12px; background:#fff; padding:12px; border-radius:6px; border:1px solid #fee2e2; }
-    .emergency-contacts ul { margin:8px 0 0 20px; }
-    .emergency-contacts li { margin-bottom:8px; }
-    .country-section { margin-bottom:12px; }
-    .country-name { font-weight:600; color:#1e3a8a; margin-bottom:4px; }
-    .privacy-note { margin-top:12px; font-size:13px; color:var(--muted); }
-    .score-display { margin-top:10px; padding:10px; background:rgba(0,0,0,0.04); border-radius:6px; font-size:14px; font-weight:600; }
-    .actions { margin-top:12px; display:flex; gap:10px; }
-    .actions button { flex:1; padding:10px; border:0; border-radius:6px; cursor:pointer; font-weight:600; }
-    .actions button.secondary { background:#64748b; color:#fff; }
-    .actions button.secondary:hover { background:#475569; }
-    .loading { display:inline-block; width:14px; height:14px; border:2px solid #fff; border-top:2px solid transparent; border-radius:50%; animation:spin 0.6s linear infinite; }
-    @keyframes spin { to { transform:rotate(360deg); } }
-    @media print {
-      body { background:#fff; padding:0; }
-      .container { max-width:100%; box-shadow:none; }
-      button { display:none; }
-      .privacy-note { display:none; }
-    }
-    :focus { outline: 3px solid rgba(13,148,136,0.18); outline-offset:2px; }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
     <h1>Espace d'Évaluation Bien-Être (PHQ-9)</h1>
     <p class="intro">Questionnaire de dépression validé. Prenez un moment pour répondre sincèrement. Vos réponses restent confidentielles.</p>
 
-    <form id="quizForm" novalidate>
-      <!-- PHQ-9 Questions -->
-      <fieldset>
-        <legend>1. Peu d'intérêt ou de plaisir à faire les choses ?</legend>
-        <div class="options">
-          <label class="option-label" for="q1_0"><input id="q1_0" name="q1" type="radio" value="0" required> Pas du tout</label>
-          <label class="option-label" for="q1_1"><input id="q1_1" name="q1" type="radio" value="1"> Plusieurs jours</label>
-          <label class="option-label" for="q1_2"><input id="q1_2" name="q1" type="radio" value="2"> Plus de la moitié des jours</label>
-          <label class="option-label" for="q1_3"><input id="q1_3" name="q1" type="radio" value="3"> Presque tous les jours</label>
-        </div>
-      </fieldset>
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+      <button class="tab-button active" data-tab="quiz">Quiz PHQ-9</button>
+      <button class="tab-button" data-tab="meetinghouse">Trouver une Église</button>
+    </div>
 
-      <fieldset>
-        <legend>2. Vous vous sentez triste, déprimé ou désespéré ?</legend>
-        <div class="options">
-          <label class="option-label" for="q2_0"><input id="q2_0" name="q2" type="radio" value="0" required> Pas du tout</label>
-          <label class="option-label" for="q2_1"><input id="q2_1" name="q2" type="radio" value="1"> Plusieurs jours</label>
-          <label class="option-label" for="q2_2"><input id="q2_2" name="q2" type="radio" value="2"> Plus de la moitié des jours</label>
-          <label class="option-label" for="q2_3"><input id="q2_3" name="q2" type="radio" value="3"> Presque tous les jours</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>3. Problèmes de sommeil : difficultés pour s'endormir, sommeil perturbé, ou trop de sommeil ?</legend>
-        <div class="options">
-          <label class="option-label" for="q3_0"><input id="q3_0" name="q3" type="radio" value="0" required> Pas du tout</label>
-          <label class="option-label" for="q3_1"><input id="q3_1" name="q3" type="radio" value="1"> Plusieurs jours</label>
-          <label class="option-label" for="q3_2"><input id="q3_2" name="q3" type="radio" value="2"> Plus de la moitié des jours</label>
-          <label class="option-label" for="q3_3"><input id="q3_3" name="q3" type="radio" value="3"> Presque tous les jours</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>4. Vous vous sentez fatigué ou manquez d'énergie ?</legend>
-        <div class="options">
-          <label class="option-label" for="q4_0"><input id="q4_0" name="q4" type="radio" value="0" required> Pas du tout</label>
-          <label class="option-label" for="q4_1"><input id="q4_1" name="q4" type="radio" value="1"> Plusieurs jours</label>
-          <label class="option-label" for="q4_2"><input id="q4_2" name="q4" type="radio" value="2"> Plus de la moitié des jours</label>
-          <label class="option-label" for="q4_3"><input id="q4_3" name="q4" type="radio" value="3"> Presque tous les jours</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>5. Mauvais appétit ou suralimentation ?</legend>
-        <div class="options">
-          <label class="option-label" for="q5_0"><input id="q5_0" name="q5" type="radio" value="0" required> Pas du tout</label>
-          <label class="option-label" for="q5_1"><input id="q5_1" name="q5" type="radio" value="1"> Plusieurs jours</label>
-          <label class="option-label" for="q5_2"><input id="q5_2" name="q5" type="radio" value="2"> Plus de la moitié des jours</label>
-          <label class="option-label" for="q5_3"><input id="q5_3" name="q5" type="radio" value="3"> Presque tous les jours</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>6. Vous vous sentez mal dans votre peau, honteux, ou vous pensez que vous êtes un échec ou que vous avez déçu votre famille ?</legend>
-        <div class="options">
-          <label class="option-label" for="q6_0"><input id="q6_0" name="q6" type="radio" value="0" required> Pas du tout</label>
-          <label class="option-label" for="q6_1"><input id="q6_1" name="q6" type="radio" value="1"> Plusieurs jours</label>
-          <label class="option-label" for="q6_2"><input id="q6_2" name="q6" type="radio" value="2"> Plus de la moitié des jours</label>
-          <label class="option-label" for="q6_3"><input id="q6_3" name="q6" type="radio" value="3"> Presque tous les jours</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>7. Difficultés de concentration : regarder la télé, lire, ou faire autre chose ?</legend>
-        <div class="options">
-          <label class="option-label" for="q7_0"><input id="q7_0" name="q7" type="radio" value="0" required> Pas du tout</label>
-          <label class="option-label" for="q7_1"><input id="q7_1" name="q7" type="radio" value="1"> Plusieurs jours</label>
-          <label class="option-label" for="q7_2"><input id="q7_2" name="q7" type="radio" value="2"> Plus de la moitié des jours</label>
-          <label class="option-label" for="q7_3"><input id="q7_3" name="q7" type="radio" value="3"> Presque tous les jours</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>8. Vous bougez ou parlez si lentement que d'autres s'en aperçoivent ? Ou au contraire, vous êtes tellement agité que vous bougez beaucoup plus que d'habitude ?</legend>
-        <div class="options">
-          <label class="option-label" for="q8_0"><input id="q8_0" name="q8" type="radio" value="0" required> Pas du tout</label>
-          <label class="option-label" for="q8_1"><input id="q8_1" name="q8" type="radio" value="1"> Plusieurs jours</label>
-          <label class="option-label" for="q8_2"><input id="q8_2" name="q8" type="radio" value="2"> Plus de la moitié des jours</label>
-          <label class="option-label" for="q8_3"><input id="q8_3" name="q8" type="radio" value="3"> Presque tous les jours</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>9. Pensées suicidaires : pensées que vous seriez mieux mort(e) ou pensées de vous faire du mal ?</legend>
-        <div class="options">
-          <label class="option-label" for="q9_0"><input id="q9_0" name="q9" type="radio" value="0" required> Pas du tout</label>
-          <label class="option-label" for="q9_1"><input id="q9_1" name="q9" type="radio" value="1"> Plusieurs jours</label>
-          <label class="option-label" for="q9_2"><input id="q9_2" name="q9" type="radio" value="2"> Plus de la moitié des jours</label>
-          <label class="option-label" for="q9_3"><input id="q9_3" name="q9" type="radio" value="3"> Presque tous les jours</label>
-        </div>
-      </fieldset>
-
-      <button type="submit" id="submitBtn">Analyser mes résultats</button>
-
-      <p class="privacy-note">
-        <strong>Confidentialité :</strong> Ce questionnaire PHQ-9 est validé cliniquement. Vos données sont chiffrées et stockées conformément à la RGPD. 
-        <a href="#" onclick="document.getElementById('privacyModal').style.display='flex'; return false;">Politique de confidentialité</a>
-      </p>
-    </form>
-
-    <div id="resultBlock" class="result-section" tabindex="-1" role="status" aria-live="polite" aria-atomic="true">
-      <div id="resultTitle" class="result-title"></div>
-      <p id="resultText"></p>
-      <div id="scoreDisplay" class="score-display"></div>
-
-      <div id="helpContacts" class="emergency-contacts" style="display:none;">
-        <strong>🚨 Ressources d'aide disponibles (International) :</strong>
-        <ul>
-          <!-- France -->
-          <div class="country-section">
-            <div class="country-name">🇫🇷 France</div>
-            <li><strong>3114 – Numéro national de prévention du suicide :</strong> Gratuit, 24h/24, 7j/7. Appel ou SMS.</li>
-            <li><strong>15 – SAMU :</strong> Pour urgence médicale ou psychiatrique.</li>
-            <li><strong>112 – Numéro d'urgence européen :</strong> Police, pompiers, ambulance.</li>
-            <li><strong>SOS Amitié :</strong> 09 72 39 40 50 (14h-22h) – Écoute et soutien.</li>
-            <li><strong>Suicide Écoute :</strong> 01 45 39 40 00 (24h/24) – Accompagnement gratuit.</li>
+    <!-- Quiz Tab -->
+    <div id="quiz-tab" class="tab-content active">
+      <form id="quizForm" novalidate>
+        <!-- PHQ-9 Questions -->
+        <fieldset>
+          <legend>1. Peu d'intérêt ou de plaisir à faire les choses ?</legend>
+          <div class="options">
+            <label class="option-label" for="q1_0"><input id="q1_0" name="q1" type="radio" value="0" required> Pas du tout</label>
+            <label class="option-label" for="q1_1"><input id="q1_1" name="q1" type="radio" value="1"> Plusieurs jours</label>
+            <label class="option-label" for="q1_2"><input id="q1_2" name="q1" type="radio" value="2"> Plus de la moitié des jours</label>
+            <label class="option-label" for="q1_3"><input id="q1_3" name="q1" type="radio" value="3"> Presque tous les jours</label>
           </div>
+        </fieldset>
 
-          <!-- DRC & Bordering Countries -->
-          <div class="country-section">
-            <div class="country-name">🇨🇩 République Démocratique du Congo (RDC)</div>
-            <li><strong>Urgence :</strong> 112 (mobile) ou contactez l'hôpital le plus proche</li>
-            <li><strong>UNICEF Helpline (soutien psychosocial) :</strong> Disponible via centres de santé locaux</li>
+        <fieldset>
+          <legend>2. Vous vous sentez triste, déprimé ou désespéré ?</legend>
+          <div class="options">
+            <label class="option-label" for="q2_0"><input id="q2_0" name="q2" type="radio" value="0" required> Pas du tout</label>
+            <label class="option-label" for="q2_1"><input id="q2_1" name="q2" type="radio" value="1"> Plusieurs jours</label>
+            <label class="option-label" for="q2_2"><input id="q2_2" name="q2" type="radio" value="2"> Plus de la moitié des jours</label>
+            <label class="option-label" for="q2_3"><input id="q2_3" name="q2" type="radio" value="3"> Presque tous les jours</label>
           </div>
+        </fieldset>
 
-          <div class="country-section">
-            <div class="country-name">🇦🇴 Angola</div>
-            <li><strong>Urgence :</strong> 112 (emergency services)</li>
-            <li><strong>Ligne d'écoute :</strong> Contact local Health Ministry ou Serviço de Proteção Social</li>
+        <fieldset>
+          <legend>3. Problèmes de sommeil : difficultés pour s'endormir, sommeil perturbé, ou trop de sommeil ?</legend>
+          <div class="options">
+            <label class="option-label" for="q3_0"><input id="q3_0" name="q3" type="radio" value="0" required> Pas du tout</label>
+            <label class="option-label" for="q3_1"><input id="q3_1" name="q3" type="radio" value="1"> Plusieurs jours</label>
+            <label class="option-label" for="q3_2"><input id="q3_2" name="q3" type="radio" value="2"> Plus de la moitié des jours</label>
+            <label class="option-label" for="q3_3"><input id="q3_3" name="q3" type="radio" value="3"> Presque tous les jours</label>
           </div>
+        </fieldset>
 
-          <div class="country-section">
-            <div class="country-name">🇿🇦 Afrique du Sud</div>
-            <li><strong>Emergency :</strong> 112 ou 10177</li>
-            <li><strong>South African Depression and Anxiety Group (SADAG) :</strong> 011 716 6016 (24h/24) – Ligne d'écoute gratuite</li>
-            <li><strong>Lifeline South Africa :</strong> 0861 322 322 – Soutien émotionnel</li>
+        <fieldset>
+          <legend>4. Vous vous sentez fatigué ou manquez d'énergie ?</legend>
+          <div class="options">
+            <label class="option-label" for="q4_0"><input id="q4_0" name="q4" type="radio" value="0" required> Pas du tout</label>
+            <label class="option-label" for="q4_1"><input id="q4_1" name="q4" type="radio" value="1"> Plusieurs jours</label>
+            <label class="option-label" for="q4_2"><input id="q4_2" name="q4" type="radio" value="2"> Plus de la moitié des jours</label>
+            <label class="option-label" for="q4_3"><input id="q4_3" name="q4" type="radio" value="3"> Presque tous les jours</label>
           </div>
+        </fieldset>
 
-          <div class="country-section">
-            <div class="country-name">🇿🇲 Zambie</div>
-            <li><strong>Urgence :</strong> 911 ou 999</li>
-            <li><strong>Ministry of Health :</strong> +260 211 374 633 – Ressources de santé mentale</li>
+        <fieldset>
+          <legend>5. Mauvais appétit ou suralimentation ?</legend>
+          <div class="options">
+            <label class="option-label" for="q5_0"><input id="q5_0" name="q5" type="radio" value="0" required> Pas du tout</label>
+            <label class="option-label" for="q5_1"><input id="q5_1" name="q5" type="radio" value="1"> Plusieurs jours</label>
+            <label class="option-label" for="q5_2"><input id="q5_2" name="q5" type="radio" value="2"> Plus de la moitié des jours</label>
+            <label class="option-label" for="q5_3"><input id="q5_3" name="q5" type="radio" value="3"> Presque tous les jours</label>
           </div>
+        </fieldset>
 
-          <div class="country-section">
-            <div class="country-name">🇹🇿 Tanzanie</div>
-            <li><strong>Urgence :</strong> 911 ou 112</li>
-            <li><strong>Tanzania Red Cross Society :</strong> +255 22 212 1360 – Soutien psychosocial</li>
+        <fieldset>
+          <legend>6. Vous vous sentez mal dans votre peau, honteux, ou vous pensez que vous êtes un échec ou que vous avez déçu votre famille ?</legend>
+          <div class="options">
+            <label class="option-label" for="q6_0"><input id="q6_0" name="q6" type="radio" value="0" required> Pas du tout</label>
+            <label class="option-label" for="q6_1"><input id="q6_1" name="q6" type="radio" value="1"> Plusieurs jours</label>
+            <label class="option-label" for="q6_2"><input id="q6_2" name="q6" type="radio" value="2"> Plus de la moitié des jours</label>
+            <label class="option-label" for="q6_3"><input id="q6_3" name="q6" type="radio" value="3"> Presque tous les jours</label>
           </div>
+        </fieldset>
 
-          <div class="country-section">
-            <div class="country-name">🇺🇬 Ouganda</div>
-            <li><strong>Urgence :</strong> 911 ou 112</li>
-            <li><strong>Uganda Red Cross :</strong> +256 414 506 000 – Services d'urgence et soutien</li>
+        <fieldset>
+          <legend>7. Difficultés de concentration : regarder la télé, lire, ou faire autre chose ?</legend>
+          <div class="options">
+            <label class="option-label" for="q7_0"><input id="q7_0" name="q7" type="radio" value="0" required> Pas du tout</label>
+            <label class="option-label" for="q7_1"><input id="q7_1" name="q7" type="radio" value="1"> Plusieurs jours</label>
+            <label class="option-label" for="q7_2"><input id="q7_2" name="q7" type="radio" value="2"> Plus de la moitié des jours</label>
+            <label class="option-label" for="q7_3"><input id="q7_3" name="q7" type="radio" value="3"> Presque tous les jours</label>
           </div>
+        </fieldset>
 
-          <div class="country-section">
-            <div class="country-name">🇷🇼 Rwanda</div>
-            <li><strong>Urgence :</strong> 112</li>
-            <li><strong>Ministry of Health Mental Health Services :</strong> +250 788 100 100 – Support psychosocial</li>
+        <fieldset>
+          <legend>8. Vous bougez ou parlez si lentement que d'autres s'en aperçoivent ? Ou au contraire, vous êtes tellement agité que vous bougez beaucoup plus que d'habitude ?</legend>
+          <div class="options">
+            <label class="option-label" for="q8_0"><input id="q8_0" name="q8" type="radio" value="0" required> Pas du tout</label>
+            <label class="option-label" for="q8_1"><input id="q8_1" name="q8" type="radio" value="1"> Plusieurs jours</label>
+            <label class="option-label" for="q8_2"><input id="q8_2" name="q8" type="radio" value="2"> Plus de la moitié des jours</label>
+            <label class="option-label" for="q8_3"><input id="q8_3" name="q8" type="radio" value="3"> Presque tous les jours</label>
           </div>
+        </fieldset>
 
-          <div class="country-section">
-            <div class="country-name">🇧🇮 Burundi</div>
-            <li><strong>Urgence :</strong> 112 (Bujumbura) ou contactez l'hôpital régional</li>
-            <li><strong>International Organization for Migration (IOM) :</strong> +257 22 287 000 – Soutien aux personnes vulnérables</li>
+        <fieldset>
+          <legend>9. Pensées suicidaires : pensées que vous seriez mieux mort(e) ou pensées de vous faire du mal ?</legend>
+          <div class="options">
+            <label class="option-label" for="q9_0"><input id="q9_0" name="q9" type="radio" value="0" required> Pas du tout</label>
+            <label class="option-label" for="q9_1"><input id="q9_1" name="q9" type="radio" value="1"> Plusieurs jours</label>
+            <label class="option-label" for="q9_2"><input id="q9_2" name="q9" type="radio" value="2"> Plus de la moitié des jours</label>
+            <label class="option-label" for="q9_3"><input id="q9_3" name="q9" type="radio" value="3"> Presque tous les jours</label>
           </div>
+        </fieldset>
 
-          <div class="country-section">
-            <div class="country-name">🇨🇬 République du Congo (Brazzaville)</div>
-            <li><strong>Urgence :</strong> 112 ou 15 (pompiers)</li>
-            <li><strong>Ministère de la Santé :</strong> Contactez l'hôpital central de Brazzaville pour ressources</li>
-          </div>
+        <button type="submit" id="submitBtn">Analyser mes résultats</button>
 
-          <div class="country-section">
-            <div class="country-name">🇨🇦 République Centrafricaine</div>
-            <li><strong>Urgence :</strong> 112 (où disponible) ou contactez l'autorité locale</li>
-            <li><strong>International Committee of the Red Cross (ICRC) :</strong> +236 21 61 16 10 – Aide humanitaire et soutien</li>
-          </div>
-
-          <!-- United States -->
-          <div class="country-section">
-            <div class="country-name">🇺🇸 États-Unis</div>
-            <li><strong>988 – Suicide & Crisis Lifeline :</strong> Gratuit, 24h/24. Appel ou SMS.</li>
-            <li><strong>911 – Emergency Services :</strong> Police, pompiers, ambulance.</li>
-            <li><strong>Crisis Text Line :</strong> Texte HOME au 741741 – Soutien immédiat par SMS</li>
-            <li><strong>NAMI Helpline (National Alliance on Mental Illness) :</strong> 1-800-950-NAMI (6264) – Information et références</li>
-          </div>
-        </ul>
-
-        <p style="margin-top:12px;font-weight:600;color:#b91c1c;">
-          ⚠️ Si vous êtes en danger immédiat ou avez des pensées suicidaires actives, appelez les services d'urgence locaux ou allez aux urgences les plus proches.
+        <p class="privacy-note">
+          <strong>Confidentialité :</strong> Ce questionnaire PHQ-9 est validé cliniquement. Vos données sont chiffrées et stockées conformément à la RGPD. 
+          <a href="#" onclick="document.getElementById('privacyModal').style.display='flex'; return false;">Politique de confidentialité</a>
         </p>
-      </div>
+      </form>
 
-      <div class="actions">
-        <button type="button" class="secondary" onclick="window.print()">🖨️ Imprimer</button>
-        <button type="button" class="secondary" onclick="document.getElementById('quizForm').reset(); document.getElementById('resultBlock').style.display='none';">⟲ Recommencer</button>
-        <button type="button" id="submitResultBtn" class="secondary" style="display:none;">📤 Envoyer</button>
+      <div id="resultBlock" class="result-section" tabindex="-1" role="status" aria-live="polite" aria-atomic="true">
+        <div id="resultTitle" class="result-title"></div>
+        <p id="resultText"></p>
+        <div id="scoreDisplay" class="score-display"></div>
+
+        <div id="helpContacts" class="emergency-contacts" style="display:none;">
+          <strong>🚨 Ressources d'aide disponibles (International) :</strong>
+          <ul>
+            <!-- France -->
+            <div class="country-section">
+              <div class="country-name">🇫🇷 France</div>
+              <li><strong>3114 – Numéro national de prévention du suicide :</strong> Gratuit, 24h/24, 7j/7. Appel ou SMS.</li>
+              <li><strong>15 – SAMU :</strong> Pour urgence médicale ou psychiatrique.</li>
+              <li><strong>112 – Numéro d'urgence européen :</strong> Police, pompiers, ambulance.</li>
+              <li><strong>SOS Amitié :</strong> 09 72 39 40 50 (14h-22h) – Écoute et soutien.</li>
+              <li><strong>Suicide Écoute :</strong> 01 45 39 40 00 (24h/24) – Accompagnement gratuit.</li>
+            </div>
+
+            <!-- DRC & Bordering Countries -->
+            <div class="country-section">
+              <div class="country-name">🇨🇩 République Démocratique du Congo (RDC)</div>
+              <li><strong>Urgence :</strong> 112 (mobile) ou contactez l'hôpital le plus proche</li>
+              <li><strong>UNICEF Helpline (soutien psychosocial) :</strong> Disponible via centres de santé locaux</li>
+            </div>
+
+            <div class="country-section">
+              <div class="country-name">🇦🇴 Angola</div>
+              <li><strong>Urgence :</strong> 112 (emergency services)</li>
+              <li><strong>Ligne d'écoute :</strong> Contact local Health Ministry ou Serviço de Proteção Social</li>
+            </div>
+
+            <div class="country-section">
+              <div class="country-name">🇿🇦 Afrique du Sud</div>
+              <li><strong>Emergency :</strong> 112 ou 10177</li>
+              <li><strong>South African Depression and Anxiety Group (SADAG) :</strong> 011 716 6016 (24h/24) – Ligne d'écoute gratuite</li>
+              <li><strong>Lifeline South Africa :</strong> 0861 322 322 – Soutien émotionnel</li>
+            </div>
+
+            <div class="country-section">
+              <div class="country-name">🇿🇲 Zambie</div>
+              <li><strong>Urgence :</strong> 911 ou 999</li>
+              <li><strong>Ministry of Health :</strong> +260 211 374 633 – Ressources de santé mentale</li>
+            </div>
+
+            <div class="country-section">
+              <div class="country-name">🇹🇿 Tanzanie</div>
+              <li><strong>Urgence :</strong> 911 ou 112</li>
+              <li><strong>Tanzania Red Cross Society :</strong> +255 22 212 1360 – Soutien psychosocial</li>
+            </div>
+
+            <div class="country-section">
+              <div class="country-name">🇺🇬 Ouganda</div>
+              <li><strong>Urgence :</strong> 911 ou 112</li>
+              <li><strong>Uganda Red Cross :</strong> +256 414 506 000 – Services d'urgence et soutien</li>
+            </div>
+
+            <div class="country-section">
+              <div class="country-name">🇷🇼 Rwanda</div>
+              <li><strong>Urgence :</strong> 112</li>
+              <li><strong>Ministry of Health Mental Health Services :</strong> +250 788 100 100 – Support psychosocial</li>
+            </div>
+
+            <div class="country-section">
+              <div class="country-name">🇧🇮 Burundi</div>
+              <li><strong>Urgence :</strong> 112 (Bujumbura) ou contactez l'hôpital régional</li>
+              <li><strong>International Organization for Migration (IOM) :</strong> +257 22 287 000 – Soutien aux personnes vulnérables</li>
+            </div>
+
+            <div class="country-section">
+              <div class="country-name">🇨🇬 République du Congo (Brazzaville)</div>
+              <li><strong>Urgence :</strong> 112 ou 15 (pompiers)</li>
+              <li><strong>Ministère de la Santé :</strong> Contactez l'hôpital central de Brazzaville pour ressources</li>
+            </div>
+
+            <div class="country-section">
+              <div class="country-name">🇨🇦 République Centrafricaine</div>
+              <li><strong>Urgence :</strong> 112 (où disponible) ou contactez l'autorité locale</li>
+              <li><strong>International Committee of the Red Cross (ICRC) :</strong> +236 21 61 16 10 – Aide humanitaire et soutien</li>
+            </div>
+
+            <!-- United States -->
+            <div class="country-section">
+              <div class="country-name">🇺🇸 États-Unis</div>
+              <li><strong>988 – Suicide & Crisis Lifeline :</strong> Gratuit, 24h/24. Appel ou SMS.</li>
+              <li><strong>911 – Emergency Services :</strong> Police, pompiers, ambulance.</li>
+              <li><strong>Crisis Text Line :</strong> Texte HOME au 741741 – Soutien immédiat par SMS</li>
+              <li><strong>NAMI Helpline (National Alliance on Mental Illness) :</strong> 1-800-950-NAMI (6264) – Information et références</li>
+            </div>
+          </ul>
+
+          <p style="margin-top:12px;font-weight:600;color:#b91c1c;">
+            ⚠️ Si vous êtes en danger immédiat ou avez des pensées suicidaires actives, appelez les services d'urgence locaux ou allez aux urgences les plus proches.
+          </p>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="secondary" onclick="window.print()">🖨️ Imprimer</button>
+          <button type="button" class="secondary" onclick="document.getElementById('quizForm').reset(); document.getElementById('resultBlock').style.display='none';">⟲ Recommencer</button>
+          <button type="button" id="submitResultBtn" class="secondary" style="display:none;">📤 Envoyer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Meetinghouse Tab -->
+    <div id="meetinghouse-tab" class="tab-content">
+      <div class="meetinghouse-section">
+        <h2>Trouver une Église LDS Locale</h2>
+        <p>Localisez les réunions et services près de vous.</p>
+        
+        <button type="button" id="locateBtn" class="primary-button">
+          📍 Utiliser Ma Localisation
+        </button>
+
+        <div id="locationStatus" style="display:none; margin-top:12px; padding:12px; border-radius:6px; text-align:center;"></div>
+
+        <div id="meetinghouseResults" style="display:none; margin-top:20px;">
+          <h3>Églises LDS à Proximité</h3>
+          <div id="meetinghouseList" class="meetinghouse-list"></div>
+        </div>
+
+        <div id="noLocationMessage" style="display:none; margin-top:12px; padding:12px; background:#f0f4f8; border-radius:6px; text-align:center; color:#64748b;">
+          <p>La géolocalisation n'a pas pu être obtenue. Veuillez activer la géolocalisation dans vos paramètres de navigateur.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -329,133 +260,8 @@
     </div>
   </div>
 
-  <script>
-    (function () {
-      const form = document.getElementById('quizForm');
-      const resultBlock = document.getElementById('resultBlock');
-      const resultTitle = document.getElementById('resultTitle');
-      const resultText = document.getElementById('resultText');
-      const helpContacts = document.getElementById('helpContacts');
-      const scoreDisplay = document.getElementById('scoreDisplay');
-      const submitBtn = document.getElementById('submitBtn');
-      const submitResultBtn = document.getElementById('submitResultBtn');
-
-      function getValue(name) {
-        const el = form.querySelector(`input[name="${name}"]:checked`);
-        return el ? parseInt(el.value, 10) : null;
-      }
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        if (!form.reportValidity()) {
-          return;
-        }
-
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="loading"></span> Analyse en cours...';
-
-        setTimeout(() => {
-          const totalQuestions = 9;
-          let score = 0;
-          let suicidalRisk = 0;
-
-          for (let i = 1; i <= totalQuestions; i++) {
-            const val = getValue('q' + i);
-            if (val === null) {
-              alert('Veuillez répondre à toutes les questions.');
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = 'Analyser mes résultats';
-              return;
-            }
-            score += val;
-          }
-
-          suicidalRisk = getValue('q9');
-
-          resultBlock.style.display = 'block';
-
-          // PHQ-9 Scoring
-          let category = '';
-          let recommendation = '';
-          if (score >= 20) {
-            category = 'Dépression sévère';
-            recommendation = 'Une consultation psychiatrique urgente est fortement recommandée.';
-          } else if (score >= 15) {
-            category = 'Dépression modérément sévère';
-            recommendation = 'Consultez rapidement un psychiatre ou un psychologue.';
-          } else if (score >= 10) {
-            category = 'Dépression modérée';
-            recommendation = 'Un suivi professionnel est conseillé.';
-          } else if (score >= 5) {
-            category = 'Dépression légère';
-            recommendation = 'Surveillez votre santé mentale et consultez si aggravation.';
-          } else {
-            category = 'Minimal ou pas de dépression';
-            recommendation = 'Continuez à prendre soin de vous.';
-          }
-
-          if (suicidalRisk >= 1 || score >= 15) {
-            resultBlock.className = 'result-section need-help';
-            resultTitle.textContent = '⚠️ Votre bien-être nécessite une attention immédiate';
-            resultTitle.style.color = '#b91c1c';
-            resultText.innerHTML = `<strong>${category}</strong><br/>${recommendation}<br/><br/>Il est important de chercher du soutien professionnel dès maintenant.`;
-            helpContacts.style.display = 'block';
-            submitResultBtn.style.display = 'inline-block';
-          } else if (score >= 5) {
-            resultBlock.className = 'result-section need-help';
-            resultTitle.textContent = 'Nous vous recommandons du soutien';
-            resultTitle.style.color = '#b91c1c';
-            resultText.innerHTML = `<strong>${category}</strong><br/>${recommendation}`;
-            helpContacts.style.display = 'none';
-            submitResultBtn.style.display = 'inline-block';
-          } else {
-            resultBlock.className = 'result-section all-good';
-            resultTitle.textContent = '✅ Votre bien-être semble stable';
-            resultTitle.style.color = '#15803d';
-            resultText.innerHTML = `<strong>${category}</strong><br/>Continuez à prendre soin de vous et n'hésitez pas à chercher du soutien si cela change.`;
-            helpContacts.style.display = 'none';
-            submitResultBtn.style.display = 'none';
-          }
-
-          scoreDisplay.innerHTML = `Score PHQ-9 : <strong>${score}/27</strong> (${category})`;
-
-          resultBlock.focus({ preventScroll: true });
-          resultBlock.scrollIntoView({ behavior: 'smooth' });
-
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Analyser mes résultats';
-        }, 800);
-      });
-
-      submitResultBtn.addEventListener('click', function () {
-        submitResultBtn.disabled = true;
-        submitResultBtn.innerHTML = '<span class="loading"></span> Envoi...';
-
-        const responses = [];
-        for (let i = 1; i <= 9; i++) {
-          responses.push(getValue('q' + i));
-        }
-
-        fetch('/api/submit-assessment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ responses, timestamp: new Date().toISOString() })
-        })
-          .then(r => r.json())
-          .then(data => {
-            alert('✅ Vos résultats ont été envoyés à un professionnel de santé. Vous serez contacté(e) dans 24h.');
-            submitResultBtn.disabled = false;
-            submitResultBtn.innerHTML = '📤 Envoyer';
-          })
-          .catch(err => {
-            console.error(err);
-            alert('❌ Erreur lors de l\'envoi. Veuillez réessayer ou contacter directement un professionnel.');
-            submitResultBtn.disabled = false;
-            submitResultBtn.innerHTML = '📤 Envoyer';
-          });
-      });
-    })();
-  </script>
+  <script src="quiz.js"></script>
+  <script src="meetinghouse.js"></script>
+  <script src="tabs.js"></script>
 </body>
 </html>
